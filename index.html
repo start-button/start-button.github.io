@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>START BUTTON - 당신의 게임, 당신의 시작</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00d9ff;
+            --neon-cyan: #00fff5;
+            --neon-purple: #bf00ff;
+            --dark-bg: #0a0a0f;
+            --dark-card: #151520;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--dark-bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(191, 0, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 20% 80%, rgba(0, 255, 245, 0.06) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        /* Neon Glow Effect */
+        .neon-text {
+            text-shadow: 0 0 10px var(--neon-cyan),
+                         0 0 20px var(--neon-cyan),
+                         0 0 40px var(--neon-blue),
+                         0 0 80px var(--neon-blue);
+            animation: neonFlicker 2s infinite alternate;
+        }
+        
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        
+        /* Button Glow */
+        .neon-button {
+            position: relative;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-blue),
+                        0 0 40px var(--neon-blue),
+                        inset 0 0 20px rgba(0, 217, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .neon-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--neon-cyan),
+                        0 0 60px var(--neon-cyan),
+                        inset 0 0 30px rgba(0, 255, 245, 0.5);
+        }
+        
+        /* Card Hover Effect */
+        .game-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3),
+                        0 0 60px rgba(0, 217, 255, 0.2);
+        }
+        
+        /* Hero Animation */
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Logo Glow */
+        .logo-glow {
+            filter: drop-shadow(0 0 20px var(--neon-cyan));
+            transition: filter 0.3s ease;
+        }
+        
+        .logo-glow:hover {
+            filter: drop-shadow(0 0 40px var(--neon-cyan)) drop-shadow(0 0 60px var(--neon-blue));
+        }
+        
+        /* Roadmap Grid */
+        .mystery-card {
+            background: linear-gradient(135deg, var(--dark-card) 0%, rgba(21, 21, 32, 0.6) 100%);
+            border: 1px solid rgba(191, 0, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mystery-card::after {
+            content: '?';
+            position: absolute;
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(0, 217, 255, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .mystery-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 10px 40px rgba(191, 0, 255, 0.3);
+        }
+        
+        /* Scroll Animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Video Placeholder */
+        .video-placeholder {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(191, 0, 255, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            to {
+                left: 100%;
+            }
+        }
+        
+        /* Play Button */
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px var(--neon-cyan);
+        }
+        
+        .play-button::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid white;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+        
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .section-title {
+                font-size: 2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Content Wrapper -->
+    <div style="position: relative; z-index: 1;">
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 w-full z-50 bg-opacity-90 backdrop-blur-md" style="background: rgba(10, 10, 15, 0.8);">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <img src="startbutton_logo.jpg" alt="START BUTTON Logo" class="h-12 logo-glow">
+                <div class="flex gap-8">
+                    <a href="#games" class="text-white hover:text-cyan-400 transition-colors orbitron">GAMES</a>
+                    <a href="#roadmap" class="text-white hover:text-cyan-400 transition-colors orbitron">ROADMAP</a>
+                    <a href="#contact" class="text-white hover:text-cyan-400 transition-colors orbitron">CONTACT</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center justify-center px-6 pt-20">
+            <div class="hero-content text-center max-w-5xl">
+                <div class="mb-8">
+                    <img src="startbutton_logo.jpg" alt="START BUTTON" class="w-32 h-32 mx-auto mb-12 logo-glow">
+                </div>
+                <h1 class="hero-title text-6xl md:text-7xl lg:text-8xl font-black mb-8 orbitron leading-tight">
+                    당신을 가슴 뛰게 하는<br>
+                    <span class="neon-text">'스타트 버튼'</span>은<br>
+                    무엇인가요?
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    우리는 모든 플레이어의 가슴을 뛰게 하는<br class="hidden md:block">
+                    그 순간을 만듭니다
+                </p>
+                <div class="mt-12">
+                    <a href="#games" class="neon-button inline-block px-12 py-4 rounded-full text-white font-bold text-lg orbitron">
+                        EXPLORE GAMES
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Game Section: Racing Stars -->
+        <section id="games" class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 scroll-fade">
+                    <h2 class="section-title text-5xl md:text-6xl font-black orbitron mb-4">
+                        <span class="neon-text">NOW PLAYING</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto"></div>
+                </div>
+                
+                <div class="game-card rounded-3xl overflow-hidden max-w-5xl mx-auto scroll-fade">
+                    <div class="grid md:grid-cols-2 gap-0">
+                        <!-- Video Area -->
+                        <div class="video-placeholder aspect-video md:aspect-auto relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="play-button"></div>
+                            </div>
+                            <div class="absolute bottom-6 left-6 right-6">
+                                <!--<p class="text-gray-400 text-sm">게임 영상을 여기에 삽입하세요</p>-->
+                                <video src="V_M_free_120_01.mp4" controls>
+                                  Your browser does not support the video tag
+                                </video>
+                            </div>
+                        </div>
+                        
+                        <!-- Content Area -->
+                        <div class="p-8 md:p-12 flex flex-col justify-center">
+                            <div class="inline-block px-4 py-2 rounded-full text-xs font-bold orbitron mb-6" 
+                                 style="background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); width: fit-content;">
+                                LIVE NOW
+                            </div>
+                            
+                            <h3 class="text-4xl md:text-5xl font-black orbitron mb-4">
+                                Racing Stars
+                            </h3>
+                            <p class="text-xl text-cyan-400 orbitron mb-6">레이싱 스타즈</p>
+                            
+                            <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                                토스(Toss) 플랫폼에서 즐기는<br>
+                                차세대 레이싱 게임
+                            </p>
+                            
+                            <!--
+                            <div class="flex gap-4">
+                                <button class="neon-button px-8 py-3 rounded-full font-bold orbitron flex-1 md:flex-none">
+                                    PLAY NOW
+                                </button>
+                                <button class="border-2 border-cyan-400 px-8 py-3 rounded-full font-bold orbitron text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all">
+                                    LEARN MORE
+                                </button>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Roadmap Section -->
+        <section id="roadmap" class="py-24 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 scroll-fade">
+                    <h2 class="section-title text-5xl md:text-6xl font-black orbitron mb-4">
+                        The Next <span class="neon-text">Adventures</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto mt-6">
+                        현재 3종 이상의 신작을 개발 중입니다<br>
+                        곧 공개될 놀라운 경험을 기대해주세요
+                    </p>
+                    <div class="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto mt-6"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 lg:gap-8 scroll-fade">
+                    <!-- Mystery Card 1 -->
+                    <div class="mystery-card rounded-2xl p-8 h-80 flex flex-col justify-between hover:scale-105 transition-all duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full mb-6" 
+                                 style="background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));"></div>
+                            <h4 class="text-2xl font-bold orbitron mb-3">Project Alpha</h4>
+                            <p class="text-gray-400">Coming Soon</p>
+                        </div>
+                        <div class="text-sm text-gray-500 orbitron">2025</div>
+                    </div>
+                    
+                    <!-- Mystery Card 2 -->
+                    <div class="mystery-card rounded-2xl p-8 h-80 flex flex-col justify-between hover:scale-105 transition-all duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full mb-6" 
+                                 style="background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));"></div>
+                            <h4 class="text-2xl font-bold orbitron mb-3">Project Beta</h4>
+                            <p class="text-gray-400">In Development</p>
+                        </div>
+                        <div class="text-sm text-gray-500 orbitron">2025</div>
+                    </div>
+                    
+                    <!-- Mystery Card 3 -->
+                    <div class="mystery-card rounded-2xl p-8 h-80 flex flex-col justify-between hover:scale-105 transition-all duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full mb-6" 
+                                 style="background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));"></div>
+                            <h4 class="text-2xl font-bold orbitron mb-3">Project Gamma</h4>
+                            <p class="text-gray-400">Early Stage</p>
+                        </div>
+                        <div class="text-sm text-gray-500 orbitron">2026</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6">
+            <div class="max-w-4xl mx-auto text-center scroll-fade">
+                <h2 class="text-5xl md:text-6xl font-black orbitron mb-8">
+                    Let's <span class="neon-text">Connect</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-12">
+                    함께 게임의 미래를 만들어갈 파트너를 찾고 있습니다
+                </p>
+                
+                <div class="bg-opacity-50 backdrop-blur-md rounded-2xl p-12" style="background: var(--dark-card); border: 1px solid rgba(0, 217, 255, 0.2);">
+                    <div class="flex items-center justify-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center" 
+                             style="background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <a href="mailto:contact@start-button.net" 
+                           class="text-2xl md:text-3xl font-bold orbitron text-cyan-400 hover:text-cyan-300 transition-colors">
+                            contact@start-button.net
+                        </a>
+                    </div>
+                    <p class="text-gray-400">
+                        제휴, 투자, 채용 문의를 환영합니다
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="py-12 px-6 border-t border-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <img src="startbutton_logo.jpg" alt="START BUTTON" class="h-10">
+                        <span class="text-gray-400">© 2025 START BUTTON. All rights reserved.</span>
+                    </div>
+                    <div class="flex gap-6 text-gray-400">
+                        <a href="#" class="hover:text-cyan-400 transition-colors">Privacy</a>
+                        <a href="#" class="hover:text-cyan-400 transition-colors">Terms</a>
+                        <a href="#" class="hover:text-cyan-400 transition-colors">About</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+    </div>
+    
+    <script>
+        // Scroll Fade Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
