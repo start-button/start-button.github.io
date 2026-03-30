@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레이싱 스타즈 서비스 종료 안내</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: url('racing_stars_bg.jpg') center center / cover no-repeat;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.55) 0%,
+                rgba(0, 0, 0, 0.70) 50%,
+                rgba(0, 0, 0, 0.85) 100%
+            );
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .notice-card {
+            background: rgba(15, 15, 25, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .info-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .fade-in-delay {
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Content -->
+    <div class="content min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-xl">
+
+            <!-- Header -->
+            <div class="text-center mb-8 fade-in">
+                <p class="text-sm tracking-widest text-gray-400 mb-3">SERVICE NOTICE</p>
+                <h1 class="text-2xl md:text-3xl font-bold leading-snug">
+                    레이싱 스타즈<br>서비스 종료 안내
+                </h1>
+            </div>
+
+            <!-- Notice Card -->
+            <div class="notice-card rounded-2xl p-6 md:p-8 fade-in-delay">
+
+                <!-- Greeting -->
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    안녕하세요, 레이싱 스타즈를 이용해 주신 여러분께 감사드려요.<br>
+                    레이싱 스타즈는 아래 일시를 기준으로 서비스를 종료해요.
+                </p>
+
+                <!-- Key Info -->
+                <div class="highlight-box rounded-xl p-5 mb-6">
+                    <div class="info-row pb-4 mb-4">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">종료 일시</p>
+                        <p class="text-lg font-bold text-white">2026년 5월 1일 (금) 오전 9:00 <span class="text-sm font-normal text-gray-400">KST</span></p>
+                    </div>
+                    <div class="info-row">
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">환불 문의</p>
+                        <p class="text-white font-medium">토스 앱 우측 상단 메뉴 → 구매내역 → 환불받기</p>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="space-y-3 text-gray-400 text-sm leading-relaxed">
+                    <p>구매하신 아이템의 환불을 원하시면, 토스 앱 우측 상단 메뉴 &gt; 구매내역 &gt; 환불받기를 통해 신청해 주세요.</p>
+                    <p>그동안 레이싱 스타즈와 함께해 주셔서 진심으로 감사해요.</p>
+                </div>
+
+                <!-- Footer -->
+                <div class="mt-8 pt-5 border-t border-white/5 text-center">
+                    <p class="text-xs text-gray-500">© 2026 START BUTTON</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
